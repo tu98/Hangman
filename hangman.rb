@@ -44,7 +44,11 @@ class Hangman
 	def play_again
 		print "\nWould you like to play again (y/n)?  "
 		u_input = gets.chomp
-		new_g=Hangman.new if u_input == 'y'
+		if u_input.downcase == 'y' 
+			new_g=Hangman.new 
+		else
+			puts "Come back soon!\n"
+		end
 	end
 
 
