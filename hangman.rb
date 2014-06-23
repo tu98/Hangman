@@ -4,6 +4,9 @@ class Hangman
 		@end_of_game = false
 		@guesses = 6
 		@missed_guesses = []
+	end
+
+	def game_start
 		puts "\n\nWelcome to the greatest hangman game ever conceived"
 		print "\nWould you like to load a previous game (y/n)?  "
 		response = gets.chomp
@@ -11,7 +14,7 @@ class Hangman
 	end
 
 	def begin_game
-		puts "\nYou can save your game at sny time by typing 'save'.\n"
+		puts "\nYou can save your game at any time by typing 'save'.\n"
 		puts "LET US BEGIN"
 		@secret_word = get_word
 		game_loop
@@ -45,7 +48,8 @@ class Hangman
 		print "\nWould you like to play again (y/n)?  "
 		u_input = gets.chomp
 		if u_input.downcase == 'y' 
-			new_g=Hangman.new 
+			game=Hangman.new 
+			game.begin_game
 		else
 			puts "Come back soon!\n"
 		end
@@ -61,15 +65,13 @@ class Hangman
 
 	def won_game
 		puts "\nCongrats! You got it!"
-		print "Would you like to play again (y/n)?  "
-		u_input = gets.chomp
 		@end_of_game = true
-		u_input.downcase == 'y' ? game=Hangman.new : end_game
 	end
 
 	def each_turn
 		puts "\nGuesses left: #{@guesses}"
 		puts "Failed guesses: #{@missed_guesses.join(', ')}\n\n\n"
+		puts @secret_word
 		draw
 		guess 
 	end
@@ -123,3 +125,4 @@ class Hangman
 end
 
 game = Hangman.new
+game.begin_game
