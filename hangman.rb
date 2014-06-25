@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Hangman	
 
 	def initialize
@@ -14,14 +16,19 @@ class Hangman
 	end
 
 	def begin_game
-		puts "\nYou can save your game at any time by typing 'save'.\n"
+		puts "\nYou can save your game at any time by typing 'save'."
 		puts "LET US BEGIN"
 		@secret_word = get_word
 		game_loop
 	end
 
 	def load_game
-
+		#game_file = GameFile.new("/saved_games/try.yaml")
+		#yaml = game_file.read
+		#YAML::load(yaml)
+		content = File.open("try.yaml", "r")  {|file| file.read }
+  	YAML.load(content)
+  	game_loop
 	end
 
 	def get_word
@@ -32,9 +39,9 @@ class Hangman
 
 	def game_loop
 		while true
-			check_game
 			break if @end_of_game
 			each_turn
+			check_game
 		end
 		play_again
 	end
@@ -49,7 +56,7 @@ class Hangman
 		u_input = gets.chomp
 		if u_input.downcase == 'y' 
 			game=Hangman.new 
-			game.begin_game
+			game.game_start
 		else
 			puts "Come back soon!\n"
 		end
@@ -58,7 +65,7 @@ class Hangman
 
 	def ran_out_guesses
 		puts "\nSorry, you ran out of guesses"
-		puts "\nThe word was #{@secret_word.upcase}\n"
+		puts "The word was #{@secret_word.upcase}\n"
 		@end_of_game = true
 	end
 
@@ -69,7 +76,7 @@ class Hangman
 	end
 
 	def each_turn
-		puts "\nGuesses left: #{@guesses}"
+		puts "Guesses left: #{@guesses}"
 		puts "Failed guesses: #{@missed_guesses.join(', ')}\n\n\n"
 		puts @secret_word
 		draw
@@ -109,11 +116,11 @@ class Hangman
 
 
 	def save_game
-		#yaml
+		File.open('try.yaml', 'w') {|f| f.write(YAML.dump(self))}
 	end
 
 	def wrong_guess
-		puts "\n\nSorry guy. '#{@guess}' is not in the word"
+		puts "\n'#{@guess}' was not in the word"
 		@guesses -= 1
 		@missed_guesses << @guess 
 	end
@@ -125,4 +132,4 @@ class Hangman
 end
 
 game = Hangman.new
-game.begin_game
+game.game_start
