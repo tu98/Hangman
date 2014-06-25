@@ -1,0 +1,8 @@
+--- !ruby/object:Hangman
+end_of_game: false
+guesses: 4
+missed_guesses:
+- d
+- g
+secret_word: POLLER
+guess: save

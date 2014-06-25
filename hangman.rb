@@ -1,4 +1,21 @@
 require 'yaml'
+=begin
+class GameFile
+  attr_accessor :path
+  def initialize(path)
+    @path = path
+  end
+  def read
+   f=File.open(path)
+   f.read
+  end
+  def write(content)
+    File.open(@path,"wb") do |f|
+      f.puts content
+     end
+  end
+end
+=end
 
 class Hangman	
 
@@ -23,13 +40,24 @@ class Hangman
 	end
 
 	def load_game
-		#game_file = GameFile.new("/saved_games/try.yaml")
-		#yaml = game_file.read
-		#YAML::load(yaml)
-		content = File.open("try.yaml", "r")  {|file| file.read }
-  	YAML.load(content)
-  	game_loop
+		
+		game_file = GameFile.new ('try2.yaml')
+		yaml = game_file.read
+		system("cat try2.yaml") 
+		object = YAML::load(yaml)
+		object.game_loop
+
+
 	end
+
+	def yaml_stuff(yaml)
+		@secret_word = yaml['secret_word']
+		@missed_guesses = yaml['missed_guesses']
+		@guesses = yaml['guesses']
+
+
+	end
+
 
 	def get_word
 		contents = File.readlines '5desk.txt'
