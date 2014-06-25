@@ -1,5 +1,5 @@
 require 'yaml'
-=begin
+
 class GameFile
   attr_accessor :path
   def initialize(path)
@@ -15,7 +15,6 @@ class GameFile
      end
   end
 end
-=end
 
 class Hangman	
 
@@ -46,14 +45,6 @@ class Hangman
 		system("cat try2.yaml") 
 		object = YAML::load(yaml)
 		object.game_loop
-
-
-	end
-
-	def yaml_stuff(yaml)
-		@secret_word = yaml['secret_word']
-		@missed_guesses = yaml['missed_guesses']
-		@guesses = yaml['guesses']
 
 
 	end
@@ -144,7 +135,7 @@ class Hangman
 
 
 	def save_game
-		File.open('try.yaml', 'w') {|f| f.write(YAML.dump(self))}
+		File.open('try2.yaml', 'w') {|f| f.write(YAML.dump(self))}
 	end
 
 	def wrong_guess

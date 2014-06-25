@@ -1,6 +1,7 @@
 --- !ruby/object:Hangman
 end_of_game: false
-guesses: 6
-missed_guesses: []
-secret_word: PINTER
+guesses: 5
+missed_guesses:
+- g
+secret_word: PeNDULOUs
 guess: save
